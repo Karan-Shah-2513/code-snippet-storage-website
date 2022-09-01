@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CodePen - Bootstrap Snippet: Login Form</title>
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./styles/login.css" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <div class="wrapper">
+      <!-- <form class="form-signin"> -->
+      <h2 class="form-signin-heading">Please login</h2>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        name="username"
+        placeholder="User name"
+        required=""
+        autofocus=""
+      />
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        id="password"
+        placeholder="Password"
+        required=""
+      />
+      <!-- <label class="checkbox">
+          <input
+            type="checkbox"
+            value="remember-me"
+            id="rememberMe"
+            name="rememberMe"
+          />
+          Remember me
+        </label> -->
+      <h3 id="warning" style="color: red"></h3>
+      New user? <a href="./signup.html"> Sign-up</a> instead
+      <button
+        class="btn btn-lg btn-primary btn-block"
+        type=""
+        onclick="dashboard()"
+      >
+        Login
+      </button>
+      <!-- </form> -->
+    </div>
+    <script>
+      function dashboard() {
+        const passwordInput = document.getElementById("password").value;
+        const nameInput = document.getElementById("username").value;
+        const ob = JSON.parse(localStorage.getItem(nameInput));
+        if (ob && passwordInput == ob.password) {
+          localStorage.setItem("userName", nameInput);
+          window.location.href = "/dashboard.html";
+        } else {
+          document.getElementById("warning").innerHTML =
+            "Username and/or password incorrect";
+        }
+      }
+    </script>
+    <!-- partial -->
+  </body>
+</html>
