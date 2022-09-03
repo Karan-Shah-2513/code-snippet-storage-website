@@ -1,0 +1,76 @@
+body {
+  background: #f0f0f0;
+}
+
+h2 {
+  margin-left: 55px;
+}
+.button {
+  display: inline-block;
+  /* left: 50%; */
+  border-radius: 7px;
+  border: none;
+  background: #1875ff;
+  color: white;
+  text-align: center;
+  font-size: 13px;
+  box-shadow: 0px 14px 56px -11px #1875ff;
+  width: 20em;
+  padding: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+}
+
+.button span:after {
+  content: "Your code";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.7s;
+}
+
+.button:hover span {
+  padding-right: 3.55em;
+}
+
+.button:hover span:after {
+  opacity: 4;
+  right: 5;
+}
+
+#comment_text {
+  margin-top: 10px;
+  margin-left: 50px;
+  width: 400px;
+  height: 30px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #ffffff #ffffff -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  color: #555555;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
+
+#comment_text:focus {
+  background: none repeat scroll 0 0 #ffffff;
+  outline-width: 0;
+}

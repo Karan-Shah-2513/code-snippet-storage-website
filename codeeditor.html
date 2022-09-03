@@ -6,8 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./prism/prism.css" />
+    <link rel="stylesheet" href="./styles/edit-code-title.css" />
+    <script src="./prism/prism.js"></script>
+    <script
+      src="tinymce_6.1.2\tinymce\js\tinymce\tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
   </head>
   <body>
-    Hello
+    <h2>Code-Title:</h2>
+
+    <textarea
+      placeholder="Your Title Here"
+      rows="2"
+      name="comment[text]"
+      id="comment_text"
+      cols="40"
+      class="ui-autocomplete-input"
+      autocomplete="off"
+      role="textbox"
+      aria-autocomplete="list"
+      aria-haspopup="true"
+    ></textarea>
+    <form method="post" action="somepage">
+      <textarea id="mytextarea" class="mceEditor">Hello World </textarea>
+    </form>
+    <br />
+    <br />
+    <button onclick="getText()" class="button" style="vertical-align: middle">
+      <span>Save</span>
+    </button>
+    <!-- <button onclick="getText()">Submit</button> -->
   </body>
+  <script>
+    if (!localStorage.getItem("userName")) {
+      document.body.innerHTML = "";
+      document.body.innerHTML = `<h1>Please Sign-in First</h1> <a href="./login.html">Login/Sign-up</a>`;
+    }
+  </script>
+  <script>
+    tinymce.init({
+      selector: "#mytextarea",
+      height: 500,
+      plugins: "codesample code",
+      codesample_languages: [
+        { text: "HTML/XML", value: "markup" },
+        { text: "JavaScript", value: "javascript" },
+        { text: "CSS", value: "css" },
+        { text: "Python", value: "python" },
+        { text: "Java", value: "java" },
+        { text: "C", value: "c" },
+        { text: "C#", value: "csharp" },
+        { text: "C++", value: "cpp" },
+      ],
+      toolbar: "codesample code",
+      content_style:
+        "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+    });
+    let thewholetext = "";
+    function getText() {
+      const userName = localStorage.getItem("userName");
+      let ob = JSON.parse(localStorage.getItem(userName));
+      thewholetext = tinymce.get("mytextarea").getContent();
+      console.clear();
+      let mycode = {
+        name: `${document.getElementById("comment_text").value}`,
+        code: `${thewholetext}`,
+      };
+      // console.log(thewholetext);
+      ob.codes.push(mycode);
+      console.log(ob.codes);
+      console.log(mycode);
+      localStorage.setItem(userName, JSON.stringify(ob));
+      console.clear();
+      window.location.href = "/dashboard.html";
+    }
+  </script>
 </html>
