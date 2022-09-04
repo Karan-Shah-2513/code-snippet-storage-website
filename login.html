@@ -58,7 +58,7 @@
         const ob = JSON.parse(localStorage.getItem(nameInput));
         if (ob && passwordInput == ob.password && nameInput != "userName") {
           localStorage.setItem("userName", nameInput);
-          window.location.href = "/dashboard.html";
+          window.location.href = "/code-snippet-storage-website/dashboard.html";
         } else {
           document.getElementById("warning").innerHTML =
             "Username and/or password incorrect";

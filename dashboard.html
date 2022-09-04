@@ -92,7 +92,8 @@
         let ob = JSON.parse(localStorage.getItem(username));
         addCards();
         function newCodeSnippet() {
-          window.location.href = "/codeeditor.html";
+          window.location.href =
+            "/code-snippet-storage-website/codeeditor.html";
         }
         function addCards() {
           let addCodesHereWithHTML = "<div class='row row-cols-3'>";
@@ -126,7 +127,8 @@
           localStorage.setItem("default-name", name);
           localStorage.setItem("default-code", code);
           console.log(localStorage.getItem("default-name"));
-          window.location.href = "/codeeditor.html";
+          window.location.href =
+            "/code-snippet-storage-website/codeeditor.html";
         }
 
         function logout() {
@@ -134,7 +136,7 @@
           localStorage.removeItem("default-name");
           localStorage.removeItem("default-code");
           updateLocalStorage();
-          window.location.href = "/";
+          window.location.href = "/code-snippet-storage-website";
         }
         function updateLocalStorage() {
           localStorage.setItem(username, JSON.stringify(ob));
