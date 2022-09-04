@@ -40,6 +40,7 @@
     <!-- <button onclick="getText()">Submit</button> -->
   </body>
   <script>
+    let isEditing = false;
     if (!localStorage.getItem("userName")) {
       document.body.innerHTML = "";
       document.body.innerHTML = `<h1>Please Sign-in First</h1> <a href="./login.html">Login/Sign-up</a>`;
@@ -61,25 +62,57 @@
         toolbar: "codesample code",
         content_style:
           "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+        setup: function (editor) {
+          editor.on("init", function (e) {
+            setDefaults();
+          });
+        },
       });
-      let thewholetext = "";
+      const userName = localStorage.getItem("userName");
+      let ob = JSON.parse(localStorage.getItem(userName));
       function getText() {
-        const userName = localStorage.getItem("userName");
-        let ob = JSON.parse(localStorage.getItem(userName));
-        thewholetext = tinymce.get("mytextarea").getContent();
-        console.clear();
+        let thewholetext = tinymce.get("mytextarea").getContent();
+        // console.clear();
         let mycode = {
           name: `${document.getElementById("comment_text").value}`,
           code: `${thewholetext}`,
         };
         // console.log(thewholetext);
-        ob.codes.push(mycode);
-        console.log(ob.codes);
-        console.log(mycode);
-        localStorage.setItem(userName, JSON.stringify(ob));
-        console.clear();
+        if (isEditing) {
+          for (let i = 0; i < ob.codes.length; i++) {
+            if (ob.codes[i].name == localStorage.getItem("default-name")) {
+              ob.codes[i] = mycode;
+              localStorage.removeItem("default-code");
+              localStorage.removeItem("default-name");
+              updateLocalStorage(userName, ob);
+              break;
+            }
+          }
+        } else {
+          ob.codes.push(mycode);
+          console.log(ob.codes);
+          console.log(mycode);
+          updateLocalStorage(userName, ob);
+          localStorage.removeItem("default-code");
+          localStorage.removeItem("default-name");
+        }
+        // console.clear();
         window.location.href = "/dashboard.html";
       }
+    }
+    function setDefaults() {
+      let thewholetext = localStorage.getItem("default-code");
+      let code_title = localStorage.getItem("default-name");
+      if (thewholetext || code_title) {
+        isEditing = true;
+        document.getElementById("comment_text").value = code_title;
+        tinymce
+          .get("mytextarea")
+          .setContent(localStorage.getItem("default-code"));
+      }
+    }
+    function updateLocalStorage(userName, ob) {
+      localStorage.setItem(userName, JSON.stringify(ob));
     }
   </script>
 </html>

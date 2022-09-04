@@ -78,7 +78,7 @@
       <br />
       <br />
 
-      <div id="grid"></div>
+      <div id="grid" class="container"></div>
     </div>
     <script>
       if (!localStorage.getItem("userName")) {
@@ -95,18 +95,18 @@
           window.location.href = "/codeeditor.html";
         }
         function addCards() {
-          let addCodesHereWithHTML = "";
+          let addCodesHereWithHTML = "<div class='row row-cols-3'>";
           for (let i = 0; i < ob.codes.length; i++) {
             addCodesHereWithHTML += `
-            <div class="card text-center" style="width: 18rem">
+            <div class="card text-center col" style="width: 18rem">
               <div class="card-body">
                 <h5 class="card-title">${ob.codes[i].name}</h5>
                 <button class="btn btn-warning btn-lg" id="edit${i}">View/Edit</button>
                 <button class="btn btn-danger btn-lg" id="delete${i}"><img src="./images/trash3-fill.svg" class="delete-button-img"/></button>
-                </div>
-                </div>
-                `;
+              </div>
+            </div>`;
           }
+          addCodesHereWithHTML += "</div>";
           document.getElementById("grid").innerHTML = addCodesHereWithHTML;
           addOnClicks();
         }
@@ -117,6 +117,8 @@
             };
             document.getElementById(`delete${i}`).onclick = () => {
               ob.codes.splice(i, 1);
+              updateLocalStorage();
+              window.location.reload();
             };
           }
         }
