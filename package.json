@@ -2,5 +2,8 @@
   "name": "js",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1"
+  }
 }

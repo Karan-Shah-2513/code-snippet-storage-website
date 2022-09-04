@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CodePen - The Team - 001</title>
+    <title>Dashboard</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
@@ -15,9 +15,10 @@
       rel="stylesheet"
       href="https://www.elegantthemes.com/preview/Divi/wp-content/themes/Divi/style.css?ver=2.7.3"
     />
+
     <link
       rel="stylesheet"
-      href="https://www.elegantthemes.com/preview/Divi/wp-content/themes/Divi/epanel/shortcodes/css/shortcodes.css?ver=2.7.3"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="./styles/dashboard.css" />
   </head>
@@ -60,10 +61,13 @@
       </button>
     </div>
     <div class="container">
-      <div class="at-section">
-        <div class="at-section__title" id="greetings"></div>
+      <div class="main-container">
+        <div class="heading">
+          <h1 class="heading__title" id="greetings"></h1>
+        </div>
       </div>
       <button
+        class="Add-snippet"
         style="--content: 'Add a New Code-Snippet'"
         onclick="newCodeSnippet()"
       >
@@ -73,7 +77,8 @@
       </button>
       <br />
       <br />
-      <div class="at-grid" data-column="3" id="grid"></div>
+
+      <div id="grid"></div>
     </div>
     <script>
       if (!localStorage.getItem("userName")) {
@@ -82,35 +87,59 @@
       } else {
         document.getElementById(
           "greetings"
-        ).innerHTML = `Hello ${localStorage.getItem("userName")}  `;
+        ).innerText = `Hello ${localStorage.getItem("userName")}  !!`;
         let username = localStorage.getItem("userName");
         let ob = JSON.parse(localStorage.getItem(username));
-        let addCodesHereWithHTML = "";
-        ob.codes.forEach((mycode) => {
-          addCodesHereWithHTML += `<div class="at-column" ">
-          <div class="at-user">
-            <div class="at-user__name">${mycode.name}</div>
-          </div>
-        </div>`;
-        });
-        document.getElementById("grid").innerHTML = addCodesHereWithHTML;
-      }
-      function newCodeSnippet() {
-        window.location.href = "/codeeditor.html";
-      }
-      function addDefaults(name, code) {
-        localStorage.setItem("default-name", name);
-        localStorage.setItem("default-code", code);
-        console.log(localStorage.getItem("default-name"));
-      }
+        addCards();
+        function newCodeSnippet() {
+          window.location.href = "/codeeditor.html";
+        }
+        function addCards() {
+          let addCodesHereWithHTML = "";
+          for (let i = 0; i < ob.codes.length; i++) {
+            addCodesHereWithHTML += `
+            <div class="card text-center" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">${ob.codes[i].name}</h5>
+                <button class="btn btn-warning btn-lg" id="edit${i}">View/Edit</button>
+                <button class="btn btn-danger btn-lg" id="delete${i}"><img src="./images/trash3-fill.svg" class="delete-button-img"/></button>
+                </div>
+                </div>
+                `;
+          }
+          document.getElementById("grid").innerHTML = addCodesHereWithHTML;
+          addOnClicks();
+        }
+        function addOnClicks() {
+          for (let i = 0; i < ob.codes.length; i++) {
+            document.getElementById(`edit${i}`).onclick = () => {
+              addDefaultsAndEdit(ob.codes[i].name, ob.codes[i].code);
+            };
+            document.getElementById(`delete${i}`).onclick = () => {
+              ob.codes.splice(i, 1);
+            };
+          }
+        }
+        function addDefaultsAndEdit(name, code) {
+          localStorage.setItem("default-name", name);
+          localStorage.setItem("default-code", code);
+          console.log(localStorage.getItem("default-name"));
+          window.location.href = "/codeeditor.html";
+        }
 
-      function logout() {
-        localStorage.removeItem("userName");
-        localStorage.removeItem("default-name");
-        localStorage.removeItem("default-code");
-        window.location.href = "/";
+        function logout() {
+          localStorage.removeItem("userName");
+          localStorage.removeItem("default-name");
+          localStorage.removeItem("default-code");
+          updateLocalStorage();
+          window.location.href = "/";
+        }
+        function updateLocalStorage() {
+          localStorage.setItem(username, JSON.stringify(ob));
+        }
       }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- partial -->
   </body>
 </html>

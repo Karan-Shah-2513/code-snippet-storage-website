@@ -43,44 +43,43 @@
     if (!localStorage.getItem("userName")) {
       document.body.innerHTML = "";
       document.body.innerHTML = `<h1>Please Sign-in First</h1> <a href="./login.html">Login/Sign-up</a>`;
-    }
-  </script>
-  <script>
-    tinymce.init({
-      selector: "#mytextarea",
-      height: 500,
-      plugins: "codesample code",
-      codesample_languages: [
-        { text: "HTML/XML", value: "markup" },
-        { text: "JavaScript", value: "javascript" },
-        { text: "CSS", value: "css" },
-        { text: "Python", value: "python" },
-        { text: "Java", value: "java" },
-        { text: "C", value: "c" },
-        { text: "C#", value: "csharp" },
-        { text: "C++", value: "cpp" },
-      ],
-      toolbar: "codesample code",
-      content_style:
-        "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
-    });
-    let thewholetext = "";
-    function getText() {
-      const userName = localStorage.getItem("userName");
-      let ob = JSON.parse(localStorage.getItem(userName));
-      thewholetext = tinymce.get("mytextarea").getContent();
-      console.clear();
-      let mycode = {
-        name: `${document.getElementById("comment_text").value}`,
-        code: `${thewholetext}`,
-      };
-      // console.log(thewholetext);
-      ob.codes.push(mycode);
-      console.log(ob.codes);
-      console.log(mycode);
-      localStorage.setItem(userName, JSON.stringify(ob));
-      console.clear();
-      window.location.href = "/dashboard.html";
+    } else {
+      tinymce.init({
+        selector: "#mytextarea",
+        height: 500,
+        plugins: "codesample code",
+        codesample_languages: [
+          { text: "HTML/XML", value: "markup" },
+          { text: "JavaScript", value: "javascript" },
+          { text: "CSS", value: "css" },
+          { text: "Python", value: "python" },
+          { text: "Java", value: "java" },
+          { text: "C", value: "c" },
+          { text: "C#", value: "csharp" },
+          { text: "C++", value: "cpp" },
+        ],
+        toolbar: "codesample code",
+        content_style:
+          "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+      });
+      let thewholetext = "";
+      function getText() {
+        const userName = localStorage.getItem("userName");
+        let ob = JSON.parse(localStorage.getItem(userName));
+        thewholetext = tinymce.get("mytextarea").getContent();
+        console.clear();
+        let mycode = {
+          name: `${document.getElementById("comment_text").value}`,
+          code: `${thewholetext}`,
+        };
+        // console.log(thewholetext);
+        ob.codes.push(mycode);
+        console.log(ob.codes);
+        console.log(mycode);
+        localStorage.setItem(userName, JSON.stringify(ob));
+        console.clear();
+        window.location.href = "/dashboard.html";
+      }
     }
   </script>
 </html>
