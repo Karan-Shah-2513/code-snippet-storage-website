@@ -3,19 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-    />
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
     />
-    <link
-      rel="stylesheet"
-      href="https://www.elegantthemes.com/preview/Divi/wp-content/themes/Divi/style.css?ver=2.7.3"
-    />
-
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
@@ -23,63 +15,18 @@
     <link rel="stylesheet" href="./styles/dashboard.css" />
   </head>
   <body>
-    <!-- partial:index.partial.html -->
     <div class="button-container">
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <defs>
-          <filter id="gooey">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-            <feColorMatrix
-              in="blur"
-              type="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-              result="highContrastGraphic"
-            />
-            <feComposite
-              in="SourceGraphic"
-              in2="highContrastGraphic"
-              operator="atop"
-            />
-          </filter>
-        </defs>
-      </svg>
-
-      <button id="gooey-button" onclick="logout()">
+      <a href="/" id="logout-button" class="btn btn-primary" onclick="logout()">
         Logout?
-        <span class="bubbles">
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-        </span>
-      </button>
+      </a>
     </div>
-    <div class="container">
-      <div class="main-container">
-        <div class="heading">
-          <h1 class="heading__title" id="greetings"></h1>
-        </div>
-      </div>
-      <button
-        class="Add-snippet"
-        style="--content: 'Add a New Code-Snippet'"
-        onclick="newCodeSnippet()"
-      >
-        <div class="left"></div>
-        Add a New Code-Snippet
-        <div class="right"></div>
-      </button>
-      <br />
-      <br />
+    <h1 class="display-3" id="greetings"></h1>
+    <a href="./codeeditor.html" class="btn btn-lg btn-dark addnewsnippetbutton">
+      Add a New Code-Snippet
+    </a>
 
-      <div id="grid" class="container"></div>
-    </div>
+    <div id="grid" class="container"></div>
+
     <script>
       if (!localStorage.getItem("userName")) {
         document.body.innerHTML = "";
@@ -91,10 +38,10 @@
         let username = localStorage.getItem("userName");
         let ob = JSON.parse(localStorage.getItem(username));
         addCards();
-        function newCodeSnippet() {
-          window.location.href =
-            "/code-snippet-storage-website/codeeditor.html";
-        }
+        // function newCodeSnippet() {
+        //   window.location.href =
+        //     "/code-snippet-storage-website/codeeditor.html";
+        // }
         function addCards() {
           let addCodesHereWithHTML = "<div class='row row-cols-3'>";
           for (let i = 0; i < ob.codes.length; i++) {
@@ -102,8 +49,8 @@
             <div class="card text-center col" style="width: 18rem">
               <div class="card-body">
                 <h5 class="card-title">${ob.codes[i].name}</h5>
-                <button class="btn btn-warning btn-lg" id="edit${i}">View/Edit</button>
-                <button class="btn btn-danger btn-lg" id="delete${i}"><img src="./images/trash3-fill.svg" class="delete-button-img"/></button>
+                <a href="./codeeditor.html" class="btn btn-warning btn-lg" id="edit${i}">View/Edit</a>
+                <button class="btn btn-danger btn-lg" id="delete${i}"><img src="./images/trash3-fill.svg"/></button>
               </div>
             </div>`;
           }
@@ -117,9 +64,15 @@
               addDefaultsAndEdit(ob.codes[i].name, ob.codes[i].code);
             };
             document.getElementById(`delete${i}`).onclick = () => {
-              ob.codes.splice(i, 1);
-              updateLocalStorage();
-              window.location.reload();
+              if (
+                confirm(
+                  "Do you really want to delete the snippet this cannot be undone"
+                )
+              ) {
+                ob.codes.splice(i, 1);
+                updateLocalStorage();
+                addCards();
+              }
             };
           }
         }
@@ -127,8 +80,8 @@
           localStorage.setItem("default-name", name);
           localStorage.setItem("default-code", code);
           console.log(localStorage.getItem("default-name"));
-          window.location.href =
-            "/code-snippet-storage-website/codeeditor.html";
+          // window.location.href =
+          //   "/code-snippet-storage-website/codeeditor.html";
         }
 
         function logout() {
@@ -136,7 +89,7 @@
           localStorage.removeItem("default-name");
           localStorage.removeItem("default-code");
           updateLocalStorage();
-          window.location.href = "/code-snippet-storage-website";
+          // window.location.href = "/code-snippet-storage-website";
         }
         function updateLocalStorage() {
           localStorage.setItem(username, JSON.stringify(ob));

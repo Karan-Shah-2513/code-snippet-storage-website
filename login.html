@@ -12,26 +12,26 @@
   <body>
     <!-- partial:index.partial.html -->
     <div class="wrapper">
-      <!-- <form class="form-signin"> -->
-      <h2 class="form-signin-heading">Please login</h2>
-      <input
-        type="text"
-        class="form-control"
-        id="username"
-        name="username"
-        placeholder="User name"
-        required=""
-        autofocus=""
-      />
-      <input
-        type="password"
-        class="form-control"
-        name="password"
-        id="password"
-        placeholder="Password"
-        required=""
-      />
-      <!-- <label class="checkbox">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please login</h2>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          placeholder="User name"
+          required=""
+          autofocus=""
+        />
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required=""
+        />
+        <!-- <label class="checkbox">
           <input
             type="checkbox"
             value="remember-me"
@@ -40,16 +40,17 @@
           />
           Remember me
         </label> -->
-      <h3 id="warning" style="color: red"></h3>
-      New user? <a href="./signup.html"> Sign-up</a> instead
-      <button
-        class="btn btn-lg btn-primary btn-block"
-        type=""
-        onclick="dashboard()"
-      >
-        Login
-      </button>
-      <!-- </form> -->
+        <h3 id="warning" style="color: red"></h3>
+        New user? <a href="./signup.html"> Sign-up</a> instead
+        <a
+          href="./dashboard.html"
+          class="btn btn-lg btn-primary btn-block"
+          type=""
+          onclick="dashboard()"
+        >
+          Login
+        </a>
+      </form>
     </div>
     <script>
       function dashboard() {
@@ -58,10 +59,11 @@
         const ob = JSON.parse(localStorage.getItem(nameInput));
         if (ob && passwordInput == ob.password && nameInput != "userName") {
           localStorage.setItem("userName", nameInput);
-          window.location.href = "/code-snippet-storage-website/dashboard.html";
+          // window.location.href = "/code-snippet-storage-website/dashboard.html";
         } else {
           document.getElementById("warning").innerHTML =
             "Username and/or password incorrect";
+          return false;
         }
       }
     </script>
