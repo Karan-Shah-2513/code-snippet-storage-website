@@ -1,0 +1,14 @@
+{
+  "users": {
+    "test": {
+      "name": "test",
+      "password": "test",
+      "codes": [
+        {
+          "name": "javascript",
+          "code": "<pre class='language-javascript'><code>function dashboard() {console.log('In dashboard');console.log(document.getElementById('username').value);console.log(document.getElementById('password').value);userName = document.getElementById('password').value;addNewUserName(document.getElementById('username').value,document.getElementById('password').value);}</code></pre><p>Hello World</p>"
+        }
+      ]
+    }
+  }
+}

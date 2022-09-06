@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CodePen - Bootstrap Snippet: Login Form</title>
+    <title>Login</title>
     <link
       rel="stylesheet"
       href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"
@@ -12,7 +12,7 @@
   <body>
     <!-- partial:index.partial.html -->
     <div class="wrapper">
-      <form class="form-signin">
+      <form class="form-signin" action="">
         <h2 class="form-signin-heading">Please login</h2>
         <input
           type="text"
@@ -41,15 +41,14 @@
           Remember me
         </label> -->
         <h3 id="warning" style="color: red"></h3>
-        New user? <a href="./signup.html"> Sign-up</a> instead
-        <a
-          href="./dashboard.html"
+        <button
           class="btn btn-lg btn-primary btn-block"
-          type=""
+          type="button"
           onclick="dashboard()"
         >
           Login
-        </a>
+        </button>
+        New user? <a href="./signup.html"> Sign-up</a> instead
       </form>
     </div>
     <script>
@@ -59,7 +58,7 @@
         const ob = JSON.parse(localStorage.getItem(nameInput));
         if (ob && passwordInput == ob.password && nameInput != "userName") {
           localStorage.setItem("userName", nameInput);
-          // window.location.href = "/code-snippet-storage-website/dashboard.html";
+          window.location.href = "/code-snippet-storage-website/dashboard.html";
         } else {
           document.getElementById("warning").innerHTML =
             "Username and/or password incorrect";
